@@ -32,7 +32,7 @@ Alokah Ventures Careers
 
 <nav>
 
-<a href="#home">
+<a href="https://alokahventures.com">
 Home
 </a>
 
@@ -95,105 +95,59 @@ View Vacancies
 
 <section class="jobs" id="jobs">
 
-
-<h2>
-Available Positions
-</h2>
-
-
+<h2>Career Opportunities</h2>
 
 <div class="job-container">
 
 
+<div class="job-card" onclick="openJob('sales')">
 
-<div class="job-card">
+<h3>Sales Officers</h3>
 
+<p>Department: Logistics & Freight</p>
 
-<h3>
-Sales Officers
-</h3>
+<strong>2 Positions Available</strong>
 
+<span>Deadline: 30 July 2026</span>
 
-<p>
-Department: Logistics
-</p>
-
-
-<strong>
-2 Positions Available
-</strong>
-
-
-<button>
-Apply Now
-</button>
-
+<button>View Details</button>
 
 </div>
 
 
 
+<div class="job-card" onclick="openJob('manager')">
 
+<h3>Branch Manager</h3>
 
-<div class="job-card">
+<p>Department: Operations</p>
 
+<strong>1 Position Available</strong>
 
-<h3>
-Branch Manager
-</h3>
+<span>Deadline: 30 July 2026</span>
 
-
-<p>
-Department: Logistics
-</p>
-
-
-<strong>
-1 Position Available
-</strong>
-
-
-<button>
-Apply Now
-</button>
-
+<button>View Details</button>
 
 </div>
 
 
 
+<div class="job-card" onclick="openJob('secretary')">
 
+<h3>Secretary</h3>
 
-<div class="job-card">
+<p>Department: Administration</p>
 
+<strong>1 Position Available</strong>
 
-<h3>
-Secretary
-</h3>
+<span>Deadline: 30 July 2026</span>
 
-
-<p>
-Department: Administration
-</p>
-
-
-<strong>
-1 Position Available
-</strong>
-
-
-<button>
-Apply Now
-</button>
-
+<button>View Details</button>
 
 </div>
 
 
-
-
 </div>
-
 
 </section>
 
@@ -203,70 +157,107 @@ Apply Now
 
 
 
-<section class="application" id="apply">
-
-
-<h2>
-Job Application
-</h2>
-
-
-
-<form id="applicationForm">
-
-
-<input 
-type="text"
-placeholder="Full Name"
-required>
-
-
-
-<input
-type="email"
-placeholder="Email Address"
-required>
-
-
-
-<input
-type="tel"
-placeholder="Phone Number"
-required>
 
 
 
 
-<select>
+<div id="jobModal" class="modal">
+
+<div class="modal-content">
+
+<span onclick="closeJob()" class="close">&times;</span>
 
 
-<option>
-Select Position
-</option>
+<h2 id="jobTitle"></h2>
+
+<p id="jobDescription"></p>
 
 
-<option>
-Sales Officer
-</option>
+<h3>Responsibilities</h3>
+
+<ul id="jobResponsibilities"></ul>
 
 
-<option>
-Branch Manager
-</option>
+<h3>Requirements</h3>
+
+<ul id="jobRequirements"></ul>
 
 
-<option>
-Secretary
-</option>
+<p>
+<strong>Application Deadline:</strong>
+<span id="jobDeadline"></span>
+</p>
 
+
+<button onclick="openApplication()">
+Apply Now
+</button>
+
+
+</div>
+
+</div>
+<div id="applicationModal" class="modal">
+
+
+<div class="modal-content">
+
+
+<span onclick="closeApplication()" class="close">
+&times;
+</span>
+
+
+<h2>Job Application Form</h2>
+
+
+<form action="send_application.php" method="POST" enctype="multipart/form-data">
+
+
+<input type="text" name="fullname" placeholder="Full Name" required>
+
+
+<input type="email" name="email" placeholder="Email Address" required>
+
+
+<input type="tel" name="phone" placeholder="Phone Number" required>
+
+
+<input type="text" name="location" placeholder="Current Location">
+
+
+<select name="education">
+
+<option>Highest Education Level</option>
+
+<option>Certificate</option>
+
+<option>Diploma</option>
+
+<option>Degree</option>
+
+<option>Masters</option>
 
 </select>
 
 
 
+<input type="text" 
+name="experience"
+placeholder="Years of Work Experience">
+
+
+
+<textarea 
+name="skills"
+placeholder="Describe your skills">
+</textarea>
+
+
 
 <textarea
-placeholder="Tell us about yourself">
+name="motivation"
+placeholder="Why should we hire you?">
 </textarea>
 
 
@@ -275,9 +266,7 @@ placeholder="Tell us about yourself">
 Upload CV
 </label>
 
-
-<input 
-type="file">
+<input type="file" name="cv" required>
 
 
 
@@ -285,31 +274,337 @@ type="file">
 Upload Cover Letter
 </label>
 
-
-<input 
-type="file">
+<input type="file" name="cover">
 
 
 
+<label>
+Upload Academic Transcripts
+</label>
+
+<input type="file" name="transcripts">
 
 
 <button type="submit">
-
 Submit Application
-
 </button>
-
 
 
 </form>
 
 
+</div>
+
+</div> 
+
+<script>
+const jobs = {
+
+
+sales:{
+title:"Sales Officer",
+
+description:
+"We are looking for motivated sales professionals to grow our logistics services.",
+
+
+responsibilities:[
+"Find and manage clients",
+"Promote freight solutions",
+"Prepare sales reports"
+],
+
+requirements:[
+"Good communication skills",
+"Experience in sales preferred",
+"Knowledge of logistics is an advantage"
+],
+
+deadline:"30 July 2026"
+
+},
+
+
+manager:{
+
+title:"Branch Manager",
+
+description:
+"Responsible for managing branch operations and customer relationships.",
+
+
+responsibilities:[
+"Supervise operations",
+"Manage staff",
+"Ensure service quality"
+],
+
+requirements:[
+"Leadership skills",
+"Minimum 3 years experience",
+"Degree preferred"
+],
+
+deadline:"30 July 2026"
+
+},
+
+
+secretary:{
+
+title:"Secretary",
+
+description:
+"Support administrative activities and company communication.",
+
+responsibilities:[
+"Handle documents",
+"Receive visitors",
+"Manage schedules"
+],
+
+requirements:[
+"Computer skills",
+"Good organization skills"
+],
+
+deadline:"30 July 2026"
+
+}
+
+};
+
+
+
+let selectedJob="";
+
+
+function openJob(job){
+
+selectedJob=job;
+
+
+let data=jobs[job];
+
+
+document.getElementById("jobTitle").innerHTML=data.title;
+
+
+document.getElementById("jobDescription").innerHTML=data.description;
+
+
+document.getElementById("jobDeadline").innerHTML=data.deadline;
+
+
+
+document.getElementById("jobResponsibilities").innerHTML=
+data.responsibilities.map(x=>`<li>${x}</li>`).join("");
+
+
+
+document.getElementById("jobRequirements").innerHTML=
+data.requirements.map(x=>`<li>${x}</li>`).join("");
+
+
+document.getElementById("jobModal").style.display="block";
+
+
+}
+
+
+
+function closeJob(){
+
+document.getElementById("jobModal").style.display="none";
+
+}
+
+
+
+function openApplication(){
+
+closeJob();
+
+document.getElementById("applicationModal").style.display="block";
+
+}
+
+
+
+function closeApplication(){
+
+document.getElementById("applicationModal").style.display="none";
+
+}
+
+</script>
+
+<section class="logistics-showcase">
+
+    <div class="logistics-container">
+
+
+        <div class="logistics-content">
+
+            <span class="small-title">
+                Reliable. Efficient. Global.
+            </span>
+
+
+            <h2>
+                Logistics Solutions That Move Your Business Forward
+            </h2>
+
+
+            <p>
+                At Alokah Ventures Limited, we provide reliable freight
+                forwarding and logistics solutions connecting businesses
+                across borders through road, sea, and air transport.
+            </p>
+
+
+            <div class="logistics-features">
+
+
+                <div class="feature-box">
+                    <i>🚛</i>
+                    <h4>Land Transport</h4>
+                    <p>
+                    Safe and efficient cargo movement.
+                    </p>
+                </div>
+
+
+                <div class="feature-box">
+                    <i>🚢</i>
+                    <h4>Sea Freight</h4>
+                    <p>
+                    International shipping solutions.
+                    </p>
+                </div>
+
+
+                <div class="feature-box">
+                    <i>✈️</i>
+                    <h4>Air Freight</h4>
+                    <p>
+                    Fast global cargo delivery.
+                    </p>
+                </div>
+
+
+            </div>
+
+
+            <a href="#contact" class="logistics-btn">
+                Request A Quote
+            </a>
+
+
+        </div>
+
+
+
+        <div class="logistics-image">
+
+            <img src="images/sec.png" 
+            alt="Alokah Ventures Logistics">
+
+        </div>
+
+
+
+    </div>
+
 </section>
 
+<section class="global-logistics">
+
+<div class="overlay"></div>
+
+
+<div class="logistics-world">
+
+
+<div class="route route-one"></div>
+<div class="route route-two"></div>
+<div class="route route-three"></div>
 
 
 
+<div class="moving-icon truck">
+🚛
+</div>
 
+
+<div class="moving-icon ship">
+🚢
+</div>
+
+
+<div class="moving-icon plane">
+✈️
+</div>
+
+
+
+<div class="content">
+
+
+<span>
+GLOBAL LOGISTICS NETWORK
+</span>
+
+
+<h2>
+Connecting Businesses Beyond Borders
+</h2>
+
+
+<p>
+From road transportation to international freight forwarding,
+Alokah Ventures Limited delivers reliable supply chain solutions
+across Africa and worldwide.
+</p>
+
+
+<div class="stats">
+
+
+<div>
+<h3>50+</h3>
+<p>Routes Connected</p>
+</div>
+
+
+<div>
+<h3>24/7</h3>
+<p>Logistics Support</p>
+</div>
+
+
+<div>
+<h3>100%</h3>
+<p>Commitment</p>
+</div>
+
+
+</div>
+
+
+
+<a href="#contact" class="global-btn">
+Talk To Our Logistics Experts
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</section>
 
 <footer>
 
